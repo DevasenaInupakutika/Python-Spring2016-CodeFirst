@@ -1,0 +1,12 @@
+1. Python motivation and reading this article before starting the teaching --> 
+   
+   http://cacm.acm.org/blogs/blog-cacm/176450-python-is-now-the-most-popular-introductory-teaching-language-at-top-us-universities/fulltext
+
+With most of the top-ranked universities switching their introductory teaching language medium to Python.
+
+2. http://www.pythontutor.com/
+
+Languages chosen by top-level universities could indicate broader trends in computer science education, since these are often the 
+trendsetters for the rest of the educational community. 
+
+3. Python course exercise links --> http://learnpythonthehardway.org/book/ex2.html
