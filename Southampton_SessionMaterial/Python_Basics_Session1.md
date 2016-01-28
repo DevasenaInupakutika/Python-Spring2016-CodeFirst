@@ -82,7 +82,7 @@ You can simply type `ipython` inside your Terminal/ Command Line and hit enter t
 
 You can start typing some Python commands - for example you can use Python's `print` command:
 
-![Python Print function](../Python_print.png)
+![Python Print function](../Python_print_function.png)
 
 You can also do some maths - give it a go!
 
