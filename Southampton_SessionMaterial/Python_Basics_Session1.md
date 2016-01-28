@@ -89,3 +89,7 @@ You can also do some maths - give it a go!
 ![Python Maths](../Python_maths.png)
 
 In a nutshell, you can interactively code in Python, without having to write a program, save it and run it. It’s especially useful when you want to try something out.
+
+## Variables
+
+
