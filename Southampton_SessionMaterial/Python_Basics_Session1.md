@@ -82,10 +82,10 @@ You can simply type `ipython` inside your Terminal/ Command Line and hit enter t
 
 You can start typing some Python commands - for example you can use Python's `print` command:
 
-[Python Print function](../Python_print.png)
+![Python Print function](../Python_print.png)
 
 You can also do some maths - give it a go!
 
-[Python Maths](../Python_maths.png)
+![Python Maths](../Python_maths.png)
 
 In a nutshell, you can interactively code in Python, without having to write a program, save it and run it. It’s especially useful when you want to try something out.
