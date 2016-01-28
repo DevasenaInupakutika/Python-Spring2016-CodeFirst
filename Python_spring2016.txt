@@ -10,3 +10,5 @@ Languages chosen by top-level universities could indicate broader trends in comp
 trendsetters for the rest of the educational community. 
 
 3. Python course exercise links --> http://learnpythonthehardway.org/book/ex2.html
+
+4. Web scraping in Python: Collecting data off of websites using Python
