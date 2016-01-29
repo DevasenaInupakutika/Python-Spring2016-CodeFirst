@@ -90,6 +90,14 @@ You can also do some maths - give it a go!
 
 In a nutshell, you can interactively code in Python, without having to write a program, save it and run it. It’s especially useful when you want to try something out.
 
+## Comments
+
+In Python, any part of a line that comes after a `#`​is ignored. This is useful when you are writing complicated programs, as it allows you to write human-readable comments to document your code - this makes it easier for others to follow your code.
+
+You can see comments being used in action:
+
+![Python Comments](../Comments.png)
+
 ## Variables
 
 A variable is just a name for a value,
