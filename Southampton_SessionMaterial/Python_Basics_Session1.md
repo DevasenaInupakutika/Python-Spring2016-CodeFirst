@@ -1,14 +1,14 @@
-> ## Learning Objectives {.objectives}
->
-> *   Introducing Python and pip
-> *   Introduction to running the Python interpreter
-> *   Using Python interactively
-> *   Introduction to Python variables
-> *   Creating and Assigning values to variables
-> *   Working with Arrays
-> *   Basic program control - Conditionals and Loops
-> *   Creating and Using Functions
-> *   Using libraries
+## Learning Objectives {.objectives}
+
+*   Introducing Python and pip
+*   Introduction to running the Python interpreter
+*   Using Python interactively
+*   Introduction to Python variables
+*   Creating and Assigning values to variables
+*   Working with Arrays
+*   Basic program control - Conditionals and Loops
+*   Creating and Using Functions
+*   Using libraries
 
 ## Introducing Python
 
@@ -176,36 +176,36 @@ This is different from the way spreadsheets work.
 Although we commonly refer to `variables` even in Python (because it is the common terminology), we really mean `names` or `identifiers`. In Python, `variables` are name tags for values, not labelled boxes.
 
 
-> ## What's inside the box? {.challenge}
->
-> Draw diagrams showing what variables refer to what values after each statement 
-> in the following program:
->
-> ~~~ {.python}
-> weight = 70.5
-> age = 35
-> # Take a trip to the planet Neptune
-> weight = weight * 1.14
-> age = age + 20
-> ~~~
+## What's inside the box? {.challenge}
 
-> ## Sorting out references {.challenge}
->
-> What does the following program print out?
->
-> ~~~ {.python}
-> first, second = 'Grace', 'Hopper'
-> ~~~
->
-> ~~~{.output}
-> first = Grace
-> second = Hopper
-> ~~~
->
-> ~~~{.python}
-> third, fourth = second, first
-> print(third, fourth)
-> ~~~
+Draw diagrams showing what variables refer to what values after each statement 
+in the following program:
+
+~~~ {.python}
+weight = 70.5
+age = 35
+# Take a trip to the planet Neptune
+weight = weight * 1.14
+age = age + 20
+~~~
+
+## Sorting out references {.challenge}
+
+What does the following program print out?
+
+~~~ {.python}
+first, second = 'Grace', 'Hopper'
+~~~
+
+~~~{.output}
+first = Grace
+second = Hopper
+~~~
+
+~~~{.python}
+third, fourth = second, first
+print(third, fourth)
+~~~
 
 ## Arrays in Python
 
@@ -328,17 +328,17 @@ print('last three characters:', element[3:6])
 first three characters: oxy
 last three characters: gen
 ~~~
->
-> ##Slicing strings challenge{.challenge}
->
-> What is the value of `element[:4]`?
-> What about `element[4:]`?
-> Or `element[:]`?
->
-> What is `element[-1]`?
-> What is `element[-2]`?
-> Given those answers,
-> explain what `element[1:-1]` does.
+
+##Slicing strings challenge{.challenge}
+
+What is the value of `element[:4]`?
+What about `element[4:]`?
+Or `element[:]`?
+
+What is `element[-1]`?
+What is `element[-2]`?
+Given those answers,
+explain what `element[1:-1]` does.
 
 List slicing is more or less the same as string slicing except that we can modify a slice. For example:
 
@@ -398,26 +398,26 @@ TypeError: 'str' object does not support item assignment
 
 does not.
 
-> ## Ch-Ch-Ch-Changes {.callout}
-> 
-> Data which can be modified in place is called mutable,
-> while data which cannot be modified is called immutable.
-> Strings and numbers are immutable. This does not mean that variables with string or number values are constants,
-> but when we want to change the value of a string or number variable, we can only replace the old value 
-> with a completely new value.
->
-> Lists and arrays, on the other hand, are mutable: we can modify them after they have been created. We can 
-> change individual elements, append new elements, or reorder the whole list.  For some operations, like 
-> sorting, we can choose whether to use a function that modifies the data in place or a function that returns a 
-> modified copy and leaves the original unchanged.
->
-> Be careful when modifying data in place.  If two variables refer to the same list, and you modify the list 
-> value, it will change for both variables! If you want variables with mutable values to be independent, you 
-> must make a copy of the value when you assign it.
->
-> Because of pitfalls like this, code which modifies data in place can be more difficult to understand. However, 
-> it is often far more efficient to modify a large data structure in place than to create a modified copy for 
-> every small change. You should consider both of these aspects when writing your code.
+## Ch-Ch-Ch-Changes {.callout}
+
+Data which can be modified in place is called mutable,
+while data which cannot be modified is called immutable.
+Strings and numbers are immutable. This does not mean that variables with string or number values are constants,
+but when we want to change the value of a string or number variable, we can only replace the old value 
+with a completely new value.
+
+Lists and arrays, on the other hand, are mutable: we can modify them after they have been created. We can 
+change individual elements, append new elements, or reorder the whole list.  For some operations, like 
+sorting, we can choose whether to use a function that modifies the data in place or a function that returns a 
+modified copy and leaves the original unchanged.
+
+Be careful when modifying data in place.  If two variables refer to the same list, and you modify the list 
+value, it will change for both variables! If you want variables with mutable values to be independent, you 
+must make a copy of the value when you assign it.
+
+Because of pitfalls like this, code which modifies data in place can be more difficult to understand. However, 
+it is often far more efficient to modify a large data structure in place than to create a modified copy for 
+every small change. You should consider both of these aspects when writing your code.
 
 There are many ways to change the contents of lists besides assigning new values to
 individual elements:
