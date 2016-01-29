@@ -7,4 +7,4 @@ Advanced Python Course at the University of Southampton.
 
 Following topics will be covered:
 
-- Session 1 (February 1): [Python basics](Southampton_SessionMaterial/Python_Basics_Session1.html) and [Python conditionals and loops](Southampton_SessionMaterial/Python_Basics_Session1_Control.html)
+- Session 1 (February 1): [Python basics](http://devasenainupakutika.github.io/Python-Spring2016-CodeFirst/Southampton_SessionMaterial/Python_Basics_Session1) and [Python conditionals and loops](http://devasenainupakutika.github.io/Python-Spring2016-CodeFirst/Southampton_SessionMaterial/Python_Basics_Session1_Control)
