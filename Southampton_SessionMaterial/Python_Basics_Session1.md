@@ -315,7 +315,7 @@ is the entire list.
 
 ### Slicing strings 
 
-A section of an array is called a [slice](../../reference.html#slice).
+A section of an array is called a slice.
 We can take slices of character strings as well:
 
 ~~~ {.python}
@@ -360,7 +360,7 @@ it simply replaces it even if it is a different size.
 
 ### Thin slices 
 
-The expression `element[3:3]` produces an [empty string](../../reference.html#empty-string),
+The expression `element[3:3]` produces an empty string,
  i.e., a string that contains no characters.
  
 ### Lists and Strings
@@ -400,8 +400,8 @@ does not.
 
 > ## Ch-Ch-Ch-Changes {.callout}
 > 
-> Data which can be modified in place is called [mutable](reference.html#mutable),
-> while data which cannot be modified is called [immutable](reference.html#immutable).
+> Data which can be modified in place is called mutable,
+> while data which cannot be modified is called immutable.
 > Strings and numbers are immutable. This does not mean that variables with string or number values are constants,
 > but when we want to change the value of a string or number variable, we can only replace the old value 
 > with a completely new value.
