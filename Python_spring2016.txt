@@ -12,3 +12,7 @@ trendsetters for the rest of the educational community.
 3. Python course exercise links --> http://learnpythonthehardway.org/book/ex2.html
 
 4. Web scraping in Python: Collecting data off of websites using Python
+
+5. Using Python with Arduino lessons: Processing real-time sensor data --> http://www.toptechboy.com/using-python-with-arduino-lessons/
+
+6. Hashable (in Python) --> Can be converted to numbers.
