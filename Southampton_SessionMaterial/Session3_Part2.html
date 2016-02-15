@@ -152,7 +152,7 @@ GDP per capity, 2005 ppp, WB data  Åland
 [5 rows x 260 columns]</code></pre>
 <p>The explanation is as below:</p>
 <p><code>complete_GDP[complete_GDP.columns[0]]</code> will return the first column of <code>complete_GDP</code> data frame, and then we are setting the column gdpc 2005 as the index of our data frame. But we dont want index and the first column to be the same, so we are going to delete this column. we are deleting this column using <code>drop</code> command.</p>
-<p><del>{.python} transform = complete_GDP.drop(complete_GDP.columns[0], axis = 1)</del>~</p>
+<pre class="sourceCode python"><code class="sourceCode python">transform = complete_GDP.drop(complete_GDP.columns[<span class="dv">0</span>], axis = <span class="dv">1</span>)</code></pre>
 <p>After deleting the <code>gdp pc</code> column, we are converting year values from float to integers.</p>
 <p>Now, we are transposing this data frame:</p>
 <pre class="sourceCode python"><code class="sourceCode python">transform.columns = <span class="dt">map</span>(<span class="kw">lambda</span> x: <span class="dt">int</span>(x), transform.columns)</code></pre>
@@ -308,6 +308,9 @@ mergeByYear(<span class="dv">2000</span>)</code></pre>
 <img src="../Income_2003.png" alt="Box plot Year 2003" /><p class="caption">Box plot Year 2003</p>
 </div>
 <p>If you explore the changes from 1980 to 2010, you can see that in most continents (especially Africa and Asia) the distribution of incomes is very skewed: most countries are in a group of low-income states with a fat tail of high-income countries that remains approximately constant throughout the 20th century.</p>
-<pre class="Challenge"><code>Consider the distribution of income per person from two regions: Asia and South America. Estimate the average income per person across the countries in those two regions. Which region has the larger average of income per person across the countries in that region?  (Use the year 2011). Also create boxplots to see the income distribution of the two continents on the dollar scale and log10(dollar) scale. </code></pre>
+<pre class="Challenge"><code>Consider the distribution of income per person from two regions: Asia and South America. 
+Estimate the average income per person across the countries in those two regions. 
+Which region has the larger average of income per person across the countries in that region?  (Use the year 2011). 
+Also create boxplots to see the income distribution of the two continents on the dollar scale and log10(dollar) scale. </code></pre>
 </body>
 </html>

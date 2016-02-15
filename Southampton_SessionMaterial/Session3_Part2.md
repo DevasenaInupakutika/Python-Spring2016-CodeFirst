@@ -153,7 +153,7 @@ The explanation is as below:
 `complete_GDP[complete_GDP.columns[0]]` will return the first column of `complete_GDP` data frame, and then we are setting the column gdpc 2005 as the index of our data frame. 
 But we dont want index and the first column to be the same, so we are going to delete this column. we are deleting this column using `drop` command.
 
-~~{.python}
+~~~{.python}
 transform = complete_GDP.drop(complete_GDP.columns[0], axis = 1)
 ~~~
 
@@ -343,7 +343,10 @@ If you explore the changes from 1980 to 2010, you can see that in most continent
 
 
 ~~~{.Challenge}
-Consider the distribution of income per person from two regions: Asia and South America. Estimate the average income per person across the countries in those two regions. Which region has the larger average of income per person across the countries in that region?  (Use the year 2011). Also create boxplots to see the income distribution of the two continents on the dollar scale and log10(dollar) scale. 
+Consider the distribution of income per person from two regions: Asia and South America. 
+Estimate the average income per person across the countries in those two regions. 
+Which region has the larger average of income per person across the countries in that region?  (Use the year 2011). 
+Also create boxplots to see the income distribution of the two continents on the dollar scale and log10(dollar) scale. 
 ~~~
 
 
