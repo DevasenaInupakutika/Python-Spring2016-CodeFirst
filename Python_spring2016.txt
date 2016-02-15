@@ -27,3 +27,6 @@ trendsetters for the rest of the educational community.
 10.Sparkfun streams: https://data.sparkfun.com/streams/
 11.SOURCE: GAPMINDER DATA 
    GDP per capita World bank: https://docs.google.com/spreadsheets/d/1TuLhfdvskeJYaQziz7M0W6vMfh4zyGFQZoeoBrAotyA/pub?gid=0#
+   
+12. Web Scraping: http://www.ilab.rutgers.edu/~vverna/scrape-the-web-using-css-selectors-in-python.html
+   
