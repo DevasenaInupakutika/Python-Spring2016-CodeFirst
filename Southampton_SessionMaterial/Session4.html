@@ -68,6 +68,43 @@ easy_install lxml </code></pre>
 <p><strong>NOTE:</strong> HTML code will vary from website to website but most follow the same structure. Keep in mind as you follow this session material that you may have to enter in different Python script/ code corresponding to the website you’re looking to scrape. Instead of <code>&lt;small&gt;</code>, it could be something else like <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>, <code>&lt;h3&gt;</code> or <code>&lt;h4&gt;</code> etc.</p>
 <p>Open <code>ipython</code> or <code>ipython notebook</code> or <code>python</code> interpreter and type in the following:</p>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> urllib
+<span class="ch">import</span> urllib.request
 <span class="ch">from</span> bs4 <span class="ch">import</span> BeautifulSoup</code></pre>
+<p>Line 1 and 2 import the <code>urllib</code> and <code>urllib.request</code> modules in Python3 for allowing access to url links and fetching URLs (uniform resource locators). It offers a very simple interface, in the form of the <code>urlopen</code> function. Line 3 calls the Beautiful Soup library which is used to scrape data from the web page.</p>
+<p>Next type in the following:</p>
+<pre class="sourceCode python"><code class="sourceCode python">soup=BeautifulSoup(urllib.request.urlopen(<span class="st">&#39;http://www.data.gov/&#39;</span>).read())</code></pre>
+<p>Above command uses both <code>BeautifulSoup</code> library and <code>urllib.request</code> module to access our target webpage.</p>
+<p>Now type in below:</p>
+<p>We can use the hierarchical nature of HTML structure to grab precisely the content that we are interested in. We will grab all of the elements that are within <code>div</code> tags and are also members of <code>class text-center getstarted</code>.</p>
+<pre class="sourceCode python"><code class="sourceCode python">soup
+datasets=soup.find_all(<span class="st">&quot;div&quot;</span>,class_=<span class="st">&quot;text-center getstarted&quot;</span>)</code></pre>
+<p><code>datasets</code> returns a collection of tag objects. This is not one of the normal Python collections covered in Basics session, it is an object specific to the <code>Beautiful Soup</code> library. It can be iterated over, but most other standard methods won’t work on it. We’ll have to do some preprocessing to get out the content that we want.</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="dt">print</span>(<span class="dt">type</span>(datasets))</code></pre>
+<p>By examining one of the elements in this collection, we can see that the information we want inside these objects, but we’ll need to use more of Beautiful Soup’s functionality and know something about HTML strucure to access them.</p>
+<pre class="sourceCode python"><code class="sourceCode python">datasets[<span class="dv">0</span>]</code></pre>
+<pre class="output"><code>&lt;div class=&quot;text-center getstarted&quot;&gt;
+&lt;h4&gt;&lt;label for=&quot;search-header&quot;&gt;Get Started&lt;br/&gt;
+&lt;small&gt;Search over &lt;a href=&quot;/metrics&quot;&gt;194,723 datasets&lt;/a&gt;
+&lt;/small&gt;
+&lt;br/&gt;&lt;i class=&quot;fa fa-caret-down&quot;&gt;&lt;/i&gt;&lt;/label&gt;&lt;/h4&gt;
+&lt;/div&gt;</code></pre>
+<p>Recall that we want just one thing: the number of datasets as it appears on the website.</p>
+<p>First we should consider how we are going to store this data. Since we want to maintain the association between the other things from each observation that we will be doing further. A natural way to store this is as a nested dict. Dict keys must be unique, and some of our items have the same associated fields, so we’ll have to use one of the other items. We’ll use the name. Visible text is always placed between tags. On the rendered page, the name we want is the number of datasets, but we can get just the associated text by using the get_text method on the a tags. You can also use contents, which returns a list instead of a string. We’ll go through all of the items in our <code>datasets</code> collection, and for each one, pull out the name and make it a key in our dict. The value will be another dict, but we haven’t yet found the contents for the other items yet so we’ll just create assign an empty dict object.</p>
+<pre class="sourceCode python"><code class="sourceCode python">number={}
+
+<span class="kw">for</span> element in datasets:
+    number[element.a.get_text()]={}     
+
+number</code></pre>
+<pre class="output"><code>{&#39;194,723 datasets&#39;: {}}</code></pre>
+<p>Hence, from the output above, we can find the number of datasets as the <code>name</code> (number below):</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">for</span> number, n in number.items():
+    <span class="kw">if</span> n=={}:
+        <span class="dt">print</span>(number)</code></pre>
+<pre class="output"><code>194,723 datasets</code></pre>
+<p>Now we want to add to our inner dictionary by the linked URL. In HTML, links are always enclosed in a tags as the href attribute. We can use this fact to easily pull out the links. But if we look at the URLs, we’ll find that they are incomplete. Like many websites, this site uses relative paths.</p>
+<pre class="sourceCode python"><code class="sourceCode python">datasets[<span class="dv">0</span>].a[<span class="st">&quot;href&quot;</span>]</code></pre>
+<pre class="output"><code>&#39;/metrics&#39;</code></pre>
+<p>It is a good starting point to get a basic understanding of how we can use Python. We will also see briefly on how to scrape data directly from an uploaded database using Google Chrome.</p>
 </body>
 </html>

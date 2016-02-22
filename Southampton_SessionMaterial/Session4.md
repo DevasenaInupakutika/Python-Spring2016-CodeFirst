@@ -77,11 +77,93 @@ Open `ipython` or `ipython notebook` or `python` interpreter and type in the fol
 
 ~~~{.python}
 import urllib
+import urllib.request
 from bs4 import BeautifulSoup
 ~~~
 
+Line 1 and 2 import the `urllib` and `urllib.request` modules in Python3 for allowing access to url links and fetching URLs (uniform resource locators). It offers a very simple interface, in the form of the `urlopen` function. 
+Line 3 calls the Beautiful Soup library which is used to scrape data from the web page. 
 
+Next type in the following:
 
+~~~{.python}
+soup=BeautifulSoup(urllib.request.urlopen('http://www.data.gov/').read())
+~~~
 
+Above command uses both `BeautifulSoup` library and `urllib.request` module to access our target webpage.
 
+Now type in below:
 
+We can use the hierarchical nature of HTML structure to grab precisely the content that we are interested in. We will grab all of the elements that are within `div` tags and are also members of `class text-center getstarted`.
+
+~~~{.python}
+soup
+datasets=soup.find_all("div",class_="text-center getstarted")
+~~~
+
+`datasets` returns a collection of tag objects. This is not one of the normal Python collections covered in Basics session, it is an object specific to the `Beautiful Soup` library. 
+It can be iterated over, but most other standard methods won't work on it. We'll have to do some preprocessing to get out the content that we want.
+
+~~~{.python}
+print(type(datasets))
+~~~
+
+By examining one of the elements in this collection, we can see that the information we want inside these objects, but we'll need to use more of Beautiful Soup's functionality and know something about HTML strucure to access them.
+
+~~~{.python}
+datasets[0]
+~~~
+
+~~~{.output}
+<div class="text-center getstarted">
+<h4><label for="search-header">Get Started<br/>
+<small>Search over <a href="/metrics">194,723 datasets</a>
+</small>
+<br/><i class="fa fa-caret-down"></i></label></h4>
+</div>
+~~~
+
+Recall that we want just one thing: the number of datasets as it appears on the website.
+
+First we should consider how we are going to store this data. Since we want to maintain the association between the other things from each observation that we will be doing further. A natural way to store this is as a nested dict. Dict keys must be unique, and some of our items have the same associated fields, so we'll have to use one of the other items. We'll use the name.
+Visible text is always placed between tags. On the rendered page, the name we want is the number of datasets, but we can get just the associated text by using the get_text method on the a tags. You can also use contents, which returns a list instead of a string.
+We'll go through all of the items in our `datasets` collection, and for each one, pull out the name and make it a key in our dict. The value will be another dict, but we haven't yet found the contents for the other items yet so we'll just create assign an empty dict object.
+
+~~~{.python}
+number={}
+
+for element in datasets:
+    number[element.a.get_text()]={}     
+
+number
+~~~
+
+~~~{.output}
+{'194,723 datasets': {}}
+~~~
+
+Hence, from the output above, we can find the number of datasets as the `name` (number below):
+
+~~~{.python}
+for number, n in number.items():
+    if n=={}:
+        print(number)
+~~~
+
+~~~{.output}
+194,723 datasets
+~~~
+
+Now we want to add to our inner dictionary by the linked URL.
+In HTML, links are always enclosed in a tags as the href attribute. We can use this fact to easily pull out the links. But if we look at the URLs, we'll find that they are incomplete. Like many websites, this site uses relative paths.
+
+~~~{.python}
+datasets[0].a["href"]
+~~~
+
+~~~{.output}
+'/metrics'
+~~~
+
+It is a good starting point to get a basic understanding of how we can use Python. We will also see briefly on how to scrape data directly 
+from an uploaded database using Google Chrome.
