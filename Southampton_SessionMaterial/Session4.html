@@ -84,6 +84,7 @@ easy_install lxml </code></pre>
 <p>Above command uses both <code>BeautifulSoup</code> library and <code>urllib.request</code> module to access our target webpage.</p>
 <p>Now type in below:</p>
 <p>We can use the hierarchical nature of HTML structure to grab precisely the content that we are interested in. We will grab all of the elements that are within <code>div</code> tags and are also members of <code>class text-center getstarted</code>.</p>
+<p>From the figure above we know that <code>&lt;div class=&quot;text-center getstarted&quot;&gt;</code> section holds the details about the number of datasets we want, let’s write some code to find that section, then grab the number within the <code>&lt;small&gt;</code> element.</p>
 <pre class="sourceCode python"><code class="sourceCode python">soup
 datasets=soup.find_all(<span class="st">&quot;div&quot;</span>,class_=<span class="st">&quot;text-center getstarted&quot;</span>)</code></pre>
 <p><code>datasets</code> returns a collection of tag objects. This is not one of the normal Python collections covered in Basics session, it is an object specific to the <code>Beautiful Soup</code> library. It can be iterated over, but most other standard methods won’t work on it. We’ll have to do some preprocessing to get out the content that we want.</p>
@@ -114,5 +115,23 @@ number</code></pre>
 <pre class="sourceCode python"><code class="sourceCode python">datasets[<span class="dv">0</span>].a[<span class="st">&quot;href&quot;</span>]</code></pre>
 <pre class="output"><code>&#39;/metrics&#39;</code></pre>
 <p>It is a good starting point to get a basic understanding of how we can use Python. We will also see briefly on how to scrape data directly from an uploaded database using Google Chrome.</p>
+<h3 id="lxml-and-requests">lxml and Requests</h3>
+<p>lxml is an extensive library for parsing XML and HTML documents very quickly, even handling messed up tags in the process of doing so. We will be using <code>Requests</code> module instead of already built-in <code>urllib</code> due to improvements in speed and readability.</p>
+<p>If <code>lxml</code> and <code>Requests</code> are not present as part of our installation, we can install both quickly with the following commands in terminal:</p>
+<pre class="sourceCode python"><code class="sourceCode python">pip install lxml
+pip install requests</code></pre>
+<p>We will stick to our original objective of trying to find the number of datasets on USA Government Public open data website.</p>
+<h4 id="importing">Importing</h4>
+<p>Starting with the import of modules:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> lxml <span class="ch">import</span> html
+<span class="ch">import</span> requests</code></pre>
+<p>We will now use <code>requests.get</code> to retrieve the web page with our data, parse it using <code>html</code> module and save the results.</p>
+<pre class="sourceCode python"><code class="sourceCode python">response=requests.get(<span class="st">&#39;http://www.data.gov/&#39;</span>)
+doc=html.fromstring(response.content)</code></pre>
+<p><strong>Note: </strong> We need to use <code>response.content</code> rather than <code>response.text</code> because <code>html.fromstring</code> implicitly expects bytes as input.</p>
+<p><code>doc</code> now consists of whole HTML file in the form of a nice tree which we can process in 2 different ways: <em>XPath</em> and <em>CSSSelect</em>.</p>
+<p>In this session, we will look at the later:</p>
+<pre class="sourceCode python"><code class="sourceCode python">link=doc.cssselect(<span class="st">&#39;small a&#39;</span>)[<span class="dv">0</span>]
+<span class="dt">print</span>(link.text)</code></pre>
 </body>
 </html>

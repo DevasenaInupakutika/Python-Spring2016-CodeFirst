@@ -108,6 +108,8 @@ Now type in below:
 
 We can use the hierarchical nature of HTML structure to grab precisely the content that we are interested in. We will grab all of the elements that are within `div` tags and are also members of `class text-center getstarted`.
 
+From the figure above we know that `<div class="text-center getstarted">` section holds the details about the number of datasets we want, let's write some code to find that section, then grab the number within the `<small>` element.
+
 ~~~{.python}
 soup
 datasets=soup.find_all("div",class_="text-center getstarted")
@@ -179,3 +181,47 @@ datasets[0].a["href"]
 
 It is a good starting point to get a basic understanding of how we can use Python. We will also see briefly on how to scrape data directly 
 from an uploaded database using Google Chrome.
+
+### lxml and Requests
+
+lxml is an extensive library for parsing XML and HTML documents very quickly, even handling messed up tags in the process of doing so. We will 
+be using `Requests` module instead of already built-in `urllib` due to improvements in speed and readability. 
+
+If `lxml` and `Requests` are not present as part of our installation, we can install both quickly with the following commands in terminal:
+
+~~~{.python}
+pip install lxml
+pip install requests
+~~~
+
+We will stick to our original objective of trying to find the number of datasets on USA Government Public open data website.
+
+#### Importing
+
+Starting with the import of modules:
+
+~~~{.python}
+from lxml import html
+import requests
+~~~
+
+We will now use `requests.get` to retrieve the web page with our data, parse it using `html` module and save the results.
+
+~~~{.python}
+response=requests.get('http://www.data.gov/')
+doc=html.fromstring(response.content)
+~~~
+
+**Note: ** We need to use `response.content` rather than `response.text` because `html.fromstring` implicitly expects bytes as input.
+
+`doc` now consists of whole HTML file in the form of a nice tree which we can process in 2 different ways: *XPath* and *CSSSelect*.
+
+In this session, we will look at the later:
+
+~~~{.python}
+link=doc.cssselect('small a')[0]
+print(link.text)
+~~~
+
+
+ 
