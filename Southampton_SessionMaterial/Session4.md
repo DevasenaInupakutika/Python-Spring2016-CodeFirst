@@ -45,6 +45,18 @@ easy_install lxml
 
 Our libraries are now installed and it is time to start writing our data scraping code.
 
+### A few scraping rules
+
+We have the packages we need. We can start scraping. Few rules are as below:
+
+1. You should check a site's terms and conditions before you scrape them. It's their data and they likely have some rules to govern it.
+
+2. Be nice - A computer will send web requests much quicker than a user can. Make sure you space out your requests a bit so that you don't hammer the site's server.
+
+3. Scrapers break - Sites change their layout all the time. If that happens, be prepared to rewrite your code.
+
+4. Web pages are inconsistent - There's sometimes some manual clean up that has to happen even after you've gotten your data.
+
 ### Scraping in Python
 
 Before we begin scraping we need an objective. In this session, we will try to scrape the current [Data.gov](http://www.data.gov/) US Government website that aims to improve public access. It contains 
