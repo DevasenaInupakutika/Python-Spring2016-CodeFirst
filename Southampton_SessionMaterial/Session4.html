@@ -111,6 +111,9 @@ number</code></pre>
     <span class="kw">if</span> n=={}:
         <span class="dt">print</span>(number)</code></pre>
 <pre class="output"><code>194,723 datasets</code></pre>
+<p>Number of datasets can also be found as below:</p>
+<pre class="sourceCode python"><code class="sourceCode python">datasets[<span class="dv">0</span>].a.get_text()</code></pre>
+<pre class="output"><code>&#39;195,033 datasets&#39;</code></pre>
 <p>Now we want to add to our inner dictionary by the linked URL. In HTML, links are always enclosed in a tags as the href attribute. We can use this fact to easily pull out the links. But if we look at the URLs, we’ll find that they are incomplete. Like many websites, this site uses relative paths.</p>
 <pre class="sourceCode python"><code class="sourceCode python">datasets[<span class="dv">0</span>].a[<span class="st">&quot;href&quot;</span>]</code></pre>
 <pre class="output"><code>&#39;/metrics&#39;</code></pre>

@@ -168,6 +168,16 @@ for number, n in number.items():
 194,723 datasets
 ~~~
 
+Number of datasets can also be found as below:
+
+~~~{.python}
+datasets[0].a.get_text()
+~~~
+
+~~~{.output}
+'195,033 datasets'
+~~~
+
 Now we want to add to our inner dictionary by the linked URL.
 In HTML, links are always enclosed in a tags as the href attribute. We can use this fact to easily pull out the links. But if we look at the URLs, we'll find that they are incomplete. Like many websites, this site uses relative paths.
 
