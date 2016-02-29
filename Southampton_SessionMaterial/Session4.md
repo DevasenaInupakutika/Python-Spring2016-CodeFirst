@@ -5,6 +5,8 @@ We can make story with data. It can be the prime element of an investigation, an
 Unfortunately, the *data* we mostly want is not always available in the required form always. It is not always available in packaged form and 
 easily and directly downloaded. In such cases, a technique used to programmatically gather the data for us called **web scraping** can be used.
 
+Web Scraping is an useful technique that let's you get data out of web pages that don't have an API. We can scrape web pages to get structured data out of unstructured web pages.
+
 In this session, we'll go through how to use *Python* to perform this task. In this process, we will also see some basics of how web pages work 
 and how data is structured. 
 
@@ -192,10 +194,11 @@ datasets[0].a["href"]
 It is a good starting point to get a basic understanding of how we can use Python. We will also see briefly on how to scrape data directly 
 from an uploaded database using Google Chrome.
 
+We can choose either Beautiful Soup or lxml based on which library fits our workflow.
+
 ### lxml and Requests
 
-lxml is an extensive library for parsing XML and HTML documents very quickly, even handling messed up tags in the process of doing so. We will 
-be using `Requests` module instead of already built-in `urllib` due to improvements in speed and readability. 
+lxml is an extensive robust library for parsing XML and HTML documents very quickly, even handling messed up tags in the process of doing so. Beautiful Soup is built on top of it. CSS Selectors can be used very easily with `lxml`. Thanks to `lxml.cssselect`. We will be using `Requests` module instead of already built-in `urllib` due to improvements in speed and readability. 
 
 If `lxml` and `Requests` are not present as part of our installation, we can install both quickly with the following commands in terminal:
 
@@ -204,7 +207,49 @@ pip install lxml
 pip install requests
 ~~~
 
+Example code is as below:
+
+~~~{.python}
+import lxml.html
+from lxml.cssselect import CSSSelector
+
+# get some html
+import requests
+
+r = requests.get('http://url.to.website/')
+
+# build the DOM Tree
+tree = lxml.html.fromstring(r.text)
+
+# print the parsed DOM Tree
+print lxml.html.tostring(tree)
+
+# construct a CSS Selector
+sel = CSSSelector('div.foo li a')
+
+# Apply the selector to the DOM tree.
+results = sel(tree)
+print results
+
+# print the HTML for the first result.
+match = results[0]
+print lxml.html.tostring(match)
+
+# get the href attribute of the first result
+print match.get('href')
+
+# print the text of the first result.
+print match.text
+
+# get the text out of all the results
+data = [result.text for result in results]
+~~~
+
+As you can see, it's really easy to use CSS Selectors with Python and lxml. Instead of spending time reading BeautifulSoup docs, we can spend time writing our application.
+
 We will stick to our original objective of trying to find the number of datasets on USA Government Public open data website.
+
+### Number of datasets currently listed on `data.gov`
 
 #### Importing
 
@@ -226,12 +271,24 @@ doc=html.fromstring(response.content)
 
 `doc` now consists of whole HTML file in the form of a nice tree which we can process in 2 different ways: *XPath* and *CSSSelect*.
 
-In this session, we will look at the later:
+In this session for the number of datasets objective, we will look at the later:
 
 ~~~{.python}
 link=doc.cssselect('small a')[0]
 print(link.text)
 ~~~
+
+#### The name of the most recently added dataset on `data.gov`
+
+~~~{.python}
+from lxml import html
+import requests
+response = requests.get('http://catalog.data.gov/dataset?q=&sort=metadata_created+desc')
+doc = html.fromstring(response.text)
+title = doc.cssselect('h3.dataset-heading')[0].text_content()
+print(title.strip())
+~~~
+
 
 
  

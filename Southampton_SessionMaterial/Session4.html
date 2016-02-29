@@ -30,6 +30,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h2 id="using-python-to-scrape-website-data">Using Python to scrape website data</h2>
 <p>We can make story with data. It can be the prime element of an investigation, and it can lead to new insights and new ways of thinking.</p>
 <p>Unfortunately, the <em>data</em> we mostly want is not always available in the required form always. It is not always available in packaged form and easily and directly downloaded. In such cases, a technique used to programmatically gather the data for us called <strong>web scraping</strong> can be used.</p>
+<p>Web Scraping is an useful technique that let’s you get data out of web pages that don’t have an API. We can scrape web pages to get structured data out of unstructured web pages.</p>
 <p>In this session, we’ll go through how to use <em>Python</em> to perform this task. In this process, we will also see some basics of how web pages work and how data is structured.</p>
 <p>In the end we will also look into a new type of data scraping by using an extension for Google’s Chrome web browser.</p>
 <h3 id="introduction">Introduction</h3>
@@ -118,12 +119,49 @@ number</code></pre>
 <pre class="sourceCode python"><code class="sourceCode python">datasets[<span class="dv">0</span>].a[<span class="st">&quot;href&quot;</span>]</code></pre>
 <pre class="output"><code>&#39;/metrics&#39;</code></pre>
 <p>It is a good starting point to get a basic understanding of how we can use Python. We will also see briefly on how to scrape data directly from an uploaded database using Google Chrome.</p>
+<p>We can choose either Beautiful Soup or lxml based on which library fits our workflow.</p>
 <h3 id="lxml-and-requests">lxml and Requests</h3>
-<p>lxml is an extensive library for parsing XML and HTML documents very quickly, even handling messed up tags in the process of doing so. We will be using <code>Requests</code> module instead of already built-in <code>urllib</code> due to improvements in speed and readability.</p>
+<p>lxml is an extensive robust library for parsing XML and HTML documents very quickly, even handling messed up tags in the process of doing so. Beautiful Soup is built on top of it. CSS Selectors can be used very easily with <code>lxml</code>. Thanks to <code>lxml.cssselect</code>. We will be using <code>Requests</code> module instead of already built-in <code>urllib</code> due to improvements in speed and readability.</p>
 <p>If <code>lxml</code> and <code>Requests</code> are not present as part of our installation, we can install both quickly with the following commands in terminal:</p>
 <pre class="sourceCode python"><code class="sourceCode python">pip install lxml
 pip install requests</code></pre>
+<p>Example code is as below:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> lxml.html
+<span class="ch">from</span> lxml.cssselect <span class="ch">import</span> CSSSelector
+
+<span class="co"># get some html</span>
+<span class="ch">import</span> requests
+
+r = requests.get(<span class="st">&#39;http://url.to.website/&#39;</span>)
+
+<span class="co"># build the DOM Tree</span>
+tree = lxml.html.fromstring(r.text)
+
+<span class="co"># print the parsed DOM Tree</span>
+<span class="dt">print</span> lxml.html.tostring(tree)
+
+<span class="co"># construct a CSS Selector</span>
+sel = CSSSelector(<span class="st">&#39;div.foo li a&#39;</span>)
+
+<span class="co"># Apply the selector to the DOM tree.</span>
+results = sel(tree)
+<span class="dt">print</span> results
+
+<span class="co"># print the HTML for the first result.</span>
+match = results[<span class="dv">0</span>]
+<span class="dt">print</span> lxml.html.tostring(match)
+
+<span class="co"># get the href attribute of the first result</span>
+<span class="dt">print</span> match.get(<span class="st">&#39;href&#39;</span>)
+
+<span class="co"># print the text of the first result.</span>
+<span class="dt">print</span> match.text
+
+<span class="co"># get the text out of all the results</span>
+data = [result.text <span class="kw">for</span> result in results]</code></pre>
+<p>As you can see, it’s really easy to use CSS Selectors with Python and lxml. Instead of spending time reading BeautifulSoup docs, we can spend time writing our application.</p>
 <p>We will stick to our original objective of trying to find the number of datasets on USA Government Public open data website.</p>
+<h3 id="number-of-datasets-currently-listed-on-data.gov">Number of datasets currently listed on <code>data.gov</code></h3>
 <h4 id="importing">Importing</h4>
 <p>Starting with the import of modules:</p>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> lxml <span class="ch">import</span> html
@@ -133,8 +171,15 @@ pip install requests</code></pre>
 doc=html.fromstring(response.content)</code></pre>
 <p><strong>Note: </strong> We need to use <code>response.content</code> rather than <code>response.text</code> because <code>html.fromstring</code> implicitly expects bytes as input.</p>
 <p><code>doc</code> now consists of whole HTML file in the form of a nice tree which we can process in 2 different ways: <em>XPath</em> and <em>CSSSelect</em>.</p>
-<p>In this session, we will look at the later:</p>
+<p>In this session for the number of datasets objective, we will look at the later:</p>
 <pre class="sourceCode python"><code class="sourceCode python">link=doc.cssselect(<span class="st">&#39;small a&#39;</span>)[<span class="dv">0</span>]
 <span class="dt">print</span>(link.text)</code></pre>
+<h4 id="the-name-of-the-most-recently-added-dataset-on-data.gov">The name of the most recently added dataset on <code>data.gov</code></h4>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> lxml <span class="ch">import</span> html
+<span class="ch">import</span> requests
+response = requests.get(<span class="st">&#39;http://catalog.data.gov/dataset?q=&amp;sort=metadata_created+desc&#39;</span>)
+doc = html.fromstring(response.text)
+title = doc.cssselect(<span class="st">&#39;h3.dataset-heading&#39;</span>)[<span class="dv">0</span>].text_content()
+<span class="dt">print</span>(title.strip())</code></pre>
 </body>
 </html>
