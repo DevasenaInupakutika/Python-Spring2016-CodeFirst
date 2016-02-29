@@ -120,5 +120,19 @@ content=info.read()
  open('austin2.html', 'w').write(content)
 ~~~ 
 
+### Challenge 3: Write a python script to find the total number of clinical trials as recorded by the [National Institutes of Health](https://clinicaltrials.gov/).
+
+**Solution: **
+
+~~~{.python}
+import requests
+from lxml import html
+url = 'https://clinicaltrials.gov/'
+document = html.fromstring(requests.get(url).text)
+element = document.cssselect('#trial-count > p > .highlight')[0]
+print(element.text_content())
+~~~
+
+### Challenge 4: Write a python script to find the [total number of visitors to the White House](https://www.whitehouse.gov/briefing-room/disclosures/visitor-records) in 2015.
 
 

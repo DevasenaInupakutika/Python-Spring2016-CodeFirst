@@ -107,5 +107,14 @@ content=info.read()
  content=content.decode()
  
  <span class="dt">open</span>(<span class="st">&#39;austin2.html&#39;</span>, <span class="st">&#39;w&#39;</span>).write(content)</code></pre>
+<h3 id="challenge-3-write-a-python-script-to-find-the-total-number-of-clinical-trials-as-recorded-by-the-national-institutes-of-health.">Challenge 3: Write a python script to find the total number of clinical trials as recorded by the <a href="https://clinicaltrials.gov/">National Institutes of Health</a>.</h3>
+<p><strong>Solution: </strong></p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> requests
+<span class="ch">from</span> lxml <span class="ch">import</span> html
+url = <span class="st">&#39;https://clinicaltrials.gov/&#39;</span>
+document = html.fromstring(requests.get(url).text)
+element = document.cssselect(<span class="st">&#39;#trial-count &gt; p &gt; .highlight&#39;</span>)[<span class="dv">0</span>]
+<span class="dt">print</span>(element.text_content())</code></pre>
+<h3 id="challenge-4-write-a-python-script-to-find-the-total-number-of-visitors-to-the-white-house-in-2015.">Challenge 4: Write a python script to find the <a href="https://www.whitehouse.gov/briefing-room/disclosures/visitor-records">total number of visitors to the White House</a> in 2015.</h3>
 </body>
 </html>
