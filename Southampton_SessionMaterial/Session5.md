@@ -70,7 +70,7 @@ It's a Robotic web browser. Represents HTTP requests and responses using the `re
 
 Let's try working on **Challenge 1** above using **RoboBrowser**.
 
-###Challenge 1 Submitting a form with `RoboBrowser Pythonic library
+###Challenge 2: Submitting a form with `RoboBrowser Pythonic library
 
 ~~~{.python}
 from robobrowser import RoboBrowser
