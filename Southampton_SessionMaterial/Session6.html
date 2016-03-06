@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<h2 id="flask-and-get-post-requests">Flask and GET/ POST requests</h2>
+<p>By now, since we have an intermediate knowledge of the <code>Python</code> programming language. We’ll be using <code>Flask</code>, a Python web application framework, to create a simple web application from scratch, with <code>MySQL</code> as a back end.</p>
+<h4 id="introduction">Introduction</h4>
+<p>The de facto framework that usually comes to our mind is the <code>Django</code> framework when we think about Python. But from a beginner’s perspective, Flask is easier to start with, as compared to Django.</p>
+<p>Flask is a framework for building lightweight web applications. In order to get up and running, we will follow the instructions as mentioned below:</p>
+<p>Setting up Flask is pretty simple and quick. With <code>pip</code> package manager, all we need to do is:</p>
+<p><code>pip</code> can be installed with below command:</p>
+<pre class="sourceCode python"><code class="sourceCode python">easy_install pip</code></pre>
+<pre class="sourceCode python"><code class="sourceCode python">pip install flask</code></pre>
+<p>Now, let’s create a baseline Flask application called <code>hello.py</code> as below by importing the <code>flask</code> module and create an app using Flask:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> flask <span class="ch">import</span> Flask
+app=Flask(<span class="st">&quot;HelloApp&quot;</span>)</code></pre>
+<p>Now define the basic route <code>/</code> and its corresponding request handler:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ot">@app.route</span>(<span class="st">&quot;/&quot;</span>)
+<span class="kw">def</span> hello():
+    <span class="kw">return</span> <span class="st">&quot;Hello World!&quot;</span></code></pre>
+<p>Next, check if the executed file is the main program and run the app:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">if</span> <span class="ot">__name__</span> == <span class="st">&quot;__main__&quot;</span>:
+    app.run() </code></pre>
+<p>Save the changes and execute <code>hello.py</code>:</p>
+<pre class="sourceCode python"><code class="sourceCode python">python hello.py</code></pre>
+<p>Point your browser to <a href="http://127.0.0.1:5000/">http://127.0.0.1:5000/</a> and you should see the welcome message.</p>
+<h4 id="flask-routes-and-decorators">Flask routes and decorators</h4>
+<p>You may be wondering what <code>@?app.route?stands</code> for and why we are using it. This is what is known as a <strong>d?ecorator</strong>.?</p>
+<p>The concept of decorators exists in most programming languages; their purpose is to inject or modify code in functions.</p>
+<p>In simpler terms, imagine you would like to do something at the entry and/ or exit points of a function. This is what is happening here ? <code>@app.route</code>, ?which is part of Flask, is doing some things internally for us so that we can accept a request coming from the user’s browser into the Python.</p>
+<p>A <em>decorator</em> always starts with the <strong>@</strong> sign and goes on the line right before a function is defined.</p>
+<h3 id="flask-taking-parameters-from-the-url">Flask: Taking parameters from the URL</h3>
+<p>Let’s look at the code below:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> flask <span class="ch">import</span> Flask
+
+app=Flask(<span class="st">&quot;My App&quot;</span>)
+
+<span class="ot">@app.route</span>(<span class="st">&quot;/&quot;</span>)
+<span class="kw">def</span> hello():
+      <span class="kw">return</span> <span class="st">&quot;Hello World!&quot;</span>
+      
+<span class="ot">@app.route</span>(<span class="st">&quot;/&lt;name&gt;&quot;</span>)
+<span class="kw">def</span> hello_someone(name):
+      <span class="kw">return</span> <span class="st">&quot;Hello </span><span class="ot">{0}</span><span class="st">!&quot;</span>.<span class="dt">format</span>(name.title())
+      
+app.run()</code></pre>
+<p>The <strong><name></strong> is a URL matcher - It will match <strong>/</strong> followed by any word, for example /andreas, /rachel etc. Flask will make this value available as a parameter to <strong>hello_someone</strong>. We then use the <strong>name</strong> variable to say hello to a particular user.</p>
+<p>We will edit the previous file and add the function <strong>hello_someone</strong>. And then check if that works by visiting URL <a href="http://127.0.0.1:5000/andreas">http://127.0.0.1:5000/andreas</a> or your name if you prefer.</p>
+<h5 id="challenge-1">Challenge 1</h5>
+<p>Try and make the above program so that visiting <strong>localhost:5000/bye/andreas</strong> returns <code>Goodbye Andreas</code> or <code>Goodbye</code> for any other name given.</p>
+<h3 id="serving-html-using-flask">Serving HTML using Flask</h3>
+<p>Flask lets us serve our HTML - This is possible using the <strong>render_template</strong> function. All we have to do is provide the name of the template and the variables we want to pass to the template engine as keyword arguments.</p>
+<p>Below is an example of how to render a template:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> flask <span class="ch">import</span> Flask
+<span class="ch">from</span> flask <span class="ch">import</span> render_template
+
+app=Flask(<span class="st">&quot;HelloApp&quot;</span>)
+
+<span class="ot">@app.route</span>(<span class="st">&quot;/&quot;</span>)
+<span class="kw">def</span> hello():
+      <span class="kw">return</span> render_template(<span class="st">&quot;hello.html&quot;</span>)
+      
+<span class="ot">@app.route</span>(<span class="st">&quot;/&lt;name&gt;&quot;</span>)
+<span class="kw">def</span> hello_someone(name):
+      <span class="kw">return</span> render_template(<span class="st">&quot;hello.html&quot;</span>, name=name.title())
+      
+app.run()      </code></pre>
+<p><strong>Note: Flask will look for templates in the templates folder.</strong> Flask uses another library called <a href="http://jinja.pocoo.org/docs/dev/">Jinja2</a>, which is a templating language for Python. It’s extremely powerful. Here’s what an example <strong>html file hello.html</strong> would look like, inside a templates folder, that uses Jinja2:</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;title&gt;Hello from Flask&lt;/title&gt;
+{% if name %}
+    &lt;h1&gt;Hello {{ name }}! &lt;/h1&gt;
+{% else %}
+    &lt;h1&gt;Hello World! &lt;/h1&gt;
+{% endif %}</code></pre>
+<h5 id="challenge-2">Challenge 2</h5>
+<p>Extend the above code so that you can say goodbye to someone if you visit <strong>localhost:5000/goodbye/<username></strong>.</p>
+<p>Also, try to add some more parameters to the URL and pass those onto your <code>hello.html</code> template. May be something like “Hello <username>! Have a nice day!” and “Hello <username>! Have a good night!” corresponding to localhost URLs.</p>
+<h3 id="creating-a-home-page">Creating a home page</h3>
+<p>When the application runs for the first time, we should show a home page</p>
+</body>
+</html>
