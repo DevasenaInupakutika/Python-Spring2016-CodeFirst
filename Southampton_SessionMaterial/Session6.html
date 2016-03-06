@@ -101,7 +101,13 @@ app.run()      </code></pre>
 <h5 id="challenge-2">Challenge 2</h5>
 <p>Extend the above code so that you can say goodbye to someone if you visit <strong>localhost:5000/goodbye/<username></strong>.</p>
 <p>Also, try to add some more parameters to the URL and pass those onto your <code>hello.html</code> template. May be something like “Hello <username>! Have a nice day!” and “Hello <username>! Have a good night!” corresponding to localhost URLs.</p>
-<h3 id="creating-a-home-page">Creating a home page</h3>
-<p>When the application runs for the first time, we should show a home page</p>
+<h3 id="files">Files</h3>
+<p>So far, we’ve seen how to send out some basic text with a simple Flask application, and the languages that are used to build the web: HTML, CSS and Javascript (as a part of previous CodeFirst course). Showing and serving text is not enough when we want to serve some actual files.</p>
+<p>Flask has the facility to <strong>create a folder</strong> in the same directory as <code>hello.py</code> with the special name of <code>static</code>. Any file you put in that folder will be served by Flask automatically.</p>
+<p>Directory can be created using <code>mkdir static</code> command. You can save an image file in this static folder, and we’d normally access our application by visiting the URL <a href="http://127.0.0.1:5000">http://127.0.0.1:5000</a>, then we can view that file by going to <a href="http://127.0.0.1:5000/static/&lt;image&gt;">http://127.0.0.1:5000/static/<image></a>.</p>
+<p>The <code>static</code> folder is a great place to put CSS stylesheets, Javascript script files, and images. Those files don’t usually change much when a website is running, hence the folder name. A common practice is that web developers will organise these files in sub-directories called, for instance, <code>css</code>, <code>js</code>, and <code>ing</code> respectively.</p>
+<h3 id="html-templates">HTML Templates</h3>
+<h3 id="creating-a-beautiful-home-page">Creating a beautiful home page</h3>
+<p>When the application runs for the first time, we should show a home page with the introduction and main content.</p>
 </body>
 </html>
