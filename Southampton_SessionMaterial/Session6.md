@@ -143,7 +143,26 @@ The `static` folder is a great place to put CSS stylesheets, Javascript script f
 
 ###HTML Templates
 
+The *content* of our application is put in **THE HTML** file. Flask makes use of HTML templating that allows it to put dynamic application data (like a list of email addresses that changes over time) into HTML easily, so that any web browser can view it easily, and it looks good as well. 
 
+Flask uses another special directory to store templates, called `templates`. Let's go ahead and create it, like we did for `static` using `mkdir templates`. 
+
+In this directory, we **create a file** called `index.html` and put some HTML: 
+
+~~~{.html}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ author }}'s first Python Web App</title>
+  </head>
+
+  <body>
+    <h2>Hello {{ name }}!</h2>
+  </body>
+</html>
+~~~
+
+The above one is a simple HTML page, but it includes 2 simple bits of Flask's templating language. When Flask shows this template in our browser, it will replace `{{author}} and {{name}}` with what we assign those 2 variables in our application. If author was assigned to be **Jack**, then the title of the page will be **Jack's first Python Web  App**.
 
 ###Creating a beautiful home page
 

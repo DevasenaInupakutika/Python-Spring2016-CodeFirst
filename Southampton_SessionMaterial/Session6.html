@@ -107,6 +107,20 @@ app.run()      </code></pre>
 <p>Directory can be created using <code>mkdir static</code> command. You can save an image file in this static folder, and we’d normally access our application by visiting the URL <a href="http://127.0.0.1:5000">http://127.0.0.1:5000</a>, then we can view that file by going to <a href="http://127.0.0.1:5000/static/&lt;image&gt;">http://127.0.0.1:5000/static/<image></a>.</p>
 <p>The <code>static</code> folder is a great place to put CSS stylesheets, Javascript script files, and images. Those files don’t usually change much when a website is running, hence the folder name. A common practice is that web developers will organise these files in sub-directories called, for instance, <code>css</code>, <code>js</code>, and <code>ing</code> respectively.</p>
 <h3 id="html-templates">HTML Templates</h3>
+<p>The <em>content</em> of our application is put in <strong>THE HTML</strong> file. Flask makes use of HTML templating that allows it to put dynamic application data (like a list of email addresses that changes over time) into HTML easily, so that any web browser can view it easily, and it looks good as well.</p>
+<p>Flask uses another special directory to store templates, called <code>templates</code>. Let’s go ahead and create it, like we did for <code>static</code> using <code>mkdir templates</code>.</p>
+<p>In this directory, we <strong>create a file</strong> called <code>index.html</code> and put some HTML:</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
+<span class="kw">&lt;html&gt;</span>
+  <span class="kw">&lt;head&gt;</span>
+    <span class="kw">&lt;title&gt;</span>{{ author }}&#39;s first Python Web App<span class="kw">&lt;/title&gt;</span>
+  <span class="kw">&lt;/head&gt;</span>
+
+  <span class="kw">&lt;body&gt;</span>
+    <span class="kw">&lt;h2&gt;</span>Hello {{ name }}!<span class="kw">&lt;/h2&gt;</span>
+  <span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></code></pre>
+<p>The above one is a simple HTML page, but it includes 2 simple bits of Flask’s templating language. When Flask shows this template in our browser, it will replace <code>{{author}} and {{name}}</code> with what we assign those 2 variables in our application. If author was assigned to be <strong>Jack</strong>, then the title of the page will be <strong>Jack’s first Python Web App</strong>.</p>
 <h3 id="creating-a-beautiful-home-page">Creating a beautiful home page</h3>
 <p>When the application runs for the first time, we should show a home page with the introduction and main content.</p>
 </body>
