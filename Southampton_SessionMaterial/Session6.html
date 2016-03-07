@@ -91,12 +91,12 @@ app=Flask(<span class="st">&quot;HelloApp&quot;</span>)
       
 app.run()      </code></pre>
 <p><strong>Note: Flask will look for templates in the templates folder.</strong> Flask uses another library called <a href="http://jinja.pocoo.org/docs/dev/">Jinja2</a>, which is a templating language for Python. It’s extremely powerful. Here’s what an example <strong>html file hello.html</strong> would look like, inside a templates folder, that uses Jinja2:</p>
-<pre><code>&lt;!doctype html&gt;
-&lt;title&gt;Hello from Flask&lt;/title&gt;
+<pre class="sourceCode html"><code class="sourceCode html"><span class="er">&lt;</span>!doctype html&gt;
+<span class="kw">&lt;title&gt;</span>Hello from Flask<span class="kw">&lt;/title&gt;</span>
 {% if name %}
-    &lt;h1&gt;Hello {{ name }}! &lt;/h1&gt;
+    <span class="kw">&lt;h1&gt;</span>Hello {{ name }}! <span class="kw">&lt;/h1&gt;</span>
 {% else %}
-    &lt;h1&gt;Hello World! &lt;/h1&gt;
+    <span class="kw">&lt;h1&gt;</span>Hello World! <span class="kw">&lt;/h1&gt;</span>
 {% endif %}</code></pre>
 <h5 id="challenge-2">Challenge 2</h5>
 <p>Extend the above code so that you can say goodbye to someone if you visit <strong>localhost:5000/goodbye/<username></strong>.</p>
@@ -121,7 +121,73 @@ app.run()      </code></pre>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre>
 <p>The above one is a simple HTML page, but it includes 2 simple bits of Flask’s templating language. When Flask shows this template in our browser, it will replace <code>{{author}} and {{name}}</code> with what we assign those 2 variables in our application. If author was assigned to be <strong>Jack</strong>, then the title of the page will be <strong>Jack’s first Python Web App</strong>.</p>
-<h3 id="creating-a-beautiful-home-page">Creating a beautiful home page</h3>
-<p>When the application runs for the first time, we should show a home page with the introduction and main content.</p>
+<p>A template separates what the content of the page should be, from the actual data that will be used as that content which makes things easier if we have to write a lot of dynamic web pages. They can do more than just display variables. Let’s now modify the web app based on the above template now:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> flask <span class="ch">import</span> Flask, render_template
+app = Flask(<span class="ot">__name__</span>)
+
+<span class="ot">@app.route</span>(<span class="st">&#39;/&#39;</span>)
+<span class="kw">def</span> hello_world():
+      author = <span class="st">&quot;Devasena&quot;</span>
+      name = <span class="st">&quot;Robot&quot;</span>
+      <span class="kw">return</span> render_template(<span class="st">&#39;index.html&#39;</span>, author=author, name=name)
+
+<span class="kw">if</span> <span class="ot">__name__</span> == <span class="st">&quot;__main__&quot;</span>:
+     app.run()</code></pre>
+<p>From the above script, instead of returning some text, we returned the result of calling <code>render_template</code>. First, we give it the file name of the template we wish to process. Then, we pass in the variable names that the template should know about (<code>author</code> and <code>name</code>) and what their values should be (..coincidentally, <code>author</code> and <code>name</code>). This function loads up the template, do the processing with the values entered, and return the full HTML text.</p>
+<p>You can now run and view your app.</p>
+<h3 id="creating-a-home-page">Creating a home page</h3>
+<p>When the application runs for the first time, we should show a home page with the introduction and main content. Let’s make our home page a bit more prettier. Let’s put some fancy fonts, large bold types, huge banner images and nice round corners and things. We need some more interesting html and some of CSS to get it look more pretty.</p>
+<p>Let’s prepare a self-contained template that we can use for our home page. You can download it from <a href="index.html">here</a> and save it in your <strong>templates</strong> folder.</p>
+<p>We can now modify our Flask app or use the same script to serve above created template.</p>
+<h3 id="get-post-requests">GET &amp; POST requests</h3>
+<p>In the world of HTTP, there are a number of types of requests; we will be concentrating on two of them:</p>
+<ul>
+<li><strong>GET</strong> - When you want to retrieve data</li>
+<li><strong>POST</strong> - When you want to send data</li>
+</ul>
+<p>Everything we have been doing so far has been using a <strong>GET request</strong> - let’s see how we can use a simple <strong>POST request</strong>. Let’s add a form to <a href="index.html"><strong>index.html</strong></a>:</p>
+<pre class="sourceCode html"><code class="sourceCode html">??<span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;contact-form&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;h1&gt;</span>Get In Touch!<span class="kw">&lt;/h1&gt;</span>
+      <span class="kw">&lt;form</span><span class="ot"> method=</span><span class="st">&quot;post&quot;</span><span class="ot"> action=</span><span class="st">&quot;/signup&quot;</span><span class="kw">&gt;</span>
+              <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;name&quot;</span><span class="kw">&gt;</span>Name: <span class="kw">&lt;/label&gt;</span>
+               <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;name&quot;</span><span class="ot"> name=</span><span class="st">&quot;name&quot;</span><span class="ot"> value=</span><span class="st">&quot;&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Devasena Inupakutika&quot;</span><span class="ot"> required=</span><span class="st">&quot;required&quot;</span><span class="ot"> autofocus=</span><span class="st">&quot;autofocus&quot;</span><span class="kw">/&gt;</span>
+               <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;email&quot;</span><span class="kw">&gt;</span>Email Address:<span class="kw">&lt;/label&gt;</span>
+               <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;email&quot;</span><span class="ot"> id=</span><span class="st">&quot;email&quot;</span><span class="ot"> name=</span><span class="st">&quot;email&quot;</span><span class="ot"> value=</span><span class="st">&quot;&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;devasena.prasad@gmail.com&quot;</span><span class="ot"> required=</span><span class="st">&quot;required&quot;</span> <span class="kw">/&gt;</span>
+               <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value=</span><span class="st">&quot;Submit&quot;</span><span class="ot"> id=</span><span class="st">&quot;submit-button&quot;</span> <span class="kw">/&gt;</span>
+       <span class="kw">&lt;/form&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>Pay attention to the <strong>form</strong> element which has an action equal to <strong>/signup</strong> - that’s the URL which the form will be submitted to, relevant to the absolute URL you are at (in this case <strong>localhost:5000</strong>)- so we need to create an entry in our <strong>hello.py</strong> file:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ot">@app.route</span>(<span class="st">&quot;/signup&quot;</span>, methods=[<span class="st">&#39;POST&#39;</span>])
+<span class="kw">def</span> sign_up():
+      form_data=request.form
+      <span class="dt">print</span>(form_data[<span class="st">&#39;name&#39;</span>])
+      <span class="dt">print</span>(form_data[<span class="st">&#39;email&#39;</span>])
+      <span class="kw">return</span> <span class="st">&quot;All OK!&quot;</span></code></pre>
+<p>There is one thing that we need to do! You might have noticed that we are now accessing a variable called <strong>request</strong>; where did this come from? This is actually part of Flask and we need to import it - so at the very top of our <code>hello.py</code> file, let’s insert:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> flask <span class="ch">import</span> request</code></pre>
+<p>Now if you navigate to <a href="localhost:5000/hello/&lt;username&gt;">localhost:5000/hello/<username></a>.</p>
+<h3 id="flask-project-directorty-structure">Flask Project Directorty Structure</h3>
+<p>Below is the recommended structure for any Flask project/ application:</p>
+<pre class="sourceCode python"><code class="sourceCode python">
+/your_app
+       hello.py
+       /static
+              /js
+                    hello.js
+             /css
+                    hello.css
+            /images
+                   hello.jpg
+       /templates
+            hello.html</code></pre>
+<p>Whatever is stored in <code>templates</code> can be automatically detected when using <code>render_template</code> function, so there isn’t anything else we need to do. In order to reference our CSS, Javascript and images from within our HTML, then we need to do something like below:</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="er">&lt;</span>!doctype html&gt;
+<span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> type=</span><span class="st">&quot;text/css&quot;</span><span class="ot"> href=</span><span class="st">&quot;{{ url_for(&#39;static&#39;, filename=&#39;css/hello.css&#39;) }}&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;title&gt;</span>Hello from Flask<span class="kw">&lt;/title&gt;</span>
+{% if name %}
+    <span class="kw">&lt;h1&gt;</span>Hello {{ name }}! <span class="kw">&lt;/h1&gt;</span>
+{% else %}
+    <span class="kw">&lt;h1&gt;</span>Hello World! <span class="kw">&lt;/h1&gt;</span>
+{% endif %}</code></pre>
 </body>
 </html>

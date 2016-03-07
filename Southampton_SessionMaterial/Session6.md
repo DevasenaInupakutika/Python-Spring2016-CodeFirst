@@ -115,7 +115,7 @@ app.run()
 **Note: Flask will look for templates in the templates folder.**
 Flask uses another library called [Jinja2](http://jinja.pocoo.org/docs/dev/), which is a templating language for Python. It's extremely powerful. Here's what an example **html file hello.html** would look like, inside a templates folder, that uses Jinja2:
 
-~~~
+~~~{.html}
 <!doctype html>
 <title>Hello from Flask</title>
 {% if name %}
@@ -162,9 +162,113 @@ In this directory, we **create a file** called `index.html` and put some HTML:
 </html>
 ~~~
 
-The above one is a simple HTML page, but it includes 2 simple bits of Flask's templating language. When Flask shows this template in our browser, it will replace `{{author}} and {{name}}` with what we assign those 2 variables in our application. If author was assigned to be **Jack**, then the title of the page will be **Jack's first Python Web  App**.
+The above one is a simple HTML page, but it includes 2 simple bits of Flask's templating language. When Flask shows this template in our browser, it will replace `{{author}} and {{name}}` with what we assign those 2 variables in our application. If author was assigned to be **Jack**, then the title of the page will be **Jack's first Python Web  App**. 
 
-###Creating a beautiful home page
+A template separates what the content of the page should be, from the actual data that will be used as that content which makes things easier if we have to write a lot of dynamic web pages. They can do more than just display variables. Let's now modify the web app based on the above template now:
 
-When the application runs for the first time, we should show a home page with the introduction and main content. 
+~~~{.python}
+from flask import Flask, render_template
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+      author = "Devasena"
+      name = "Robot"
+      return render_template('index.html', author=author, name=name)
+
+if __name__ == "__main__":
+     app.run()
+~~~
+
+From the above script, instead of returning some text, we returned the result of calling `render_template`. First, we give it the file name of the template we wish to process. Then, we pass in the variable names that the template should know about (`author` and `name`) and what their values should be (..coincidentally, `author` and `name`). This function loads up the template, do the processing with the values entered, and return the full HTML text. 
+
+You can now run and view your app.
+
+###Creating a home page
+
+When the application runs for the first time, we should show a home page with the introduction and main content. Let's make our home page a bit more prettier. Let's put some fancy fonts, large bold types, huge banner images and nice round corners and things. We need some more interesting html and some of CSS to get it look more pretty. 
+
+Let's prepare a self-contained template that we can use for our home page. You can download it from [here](index.html) and save it in your **templates** folder. 
+
+We can now modify our Flask app or use the same script to serve above created template.
+
+###GET & POST requests
+
+In the world of HTTP, there are a number of types of requests; we will be concentrating on two of them: 
+
+- **GET** - When you want to retrieve data
+- **POST** - When you want to send data
+
+Everything we have been doing so far has been using a **GET request** - let's see how we can use a simple **POST request**. Let's add a form to [**index.html**](index.html):
+
+~~~{.html}
+??<div id="contact-form">
+      <h1>Get In Touch!</h1>
+      <form method="post" action="/signup">
+              <label for="name">Name: </label>
+               <input type="text" id="name" name="name" value="" placeholder="Devasena Inupakutika" required="required" autofocus="autofocus"/>
+               <label for="email">Email Address:</label>
+               <input type="email" id="email" name="email" value="" placeholder="devasena.prasad@gmail.com" required="required" />
+               <input type="submit" value="Submit" id="submit-button" />
+       </form>
+</div>
+~~~
+
+Pay attention to the **form** element which has an action equal to **/signup** - that's the URL which the form will be submitted to, relevant to the absolute URL you are at (in this case **localhost:5000**)- so we need to create an entry in our **hello.py** file:
+
+~~~{.python}
+@app.route("/signup", methods=['POST'])
+def sign_up():
+      form_data=request.form
+      print(form_data['name'])
+      print(form_data['email'])
+      return "All OK!"
+~~~
+
+There is one thing that we need to do! You might have noticed that we are now accessing a variable called **request**; where did this come from? This is actually part of Flask and we need to import it - so at the very top of our `hello.py` file, let's insert:
+
+~~~{.python}
+from flask import request
+~~~
+
+Now if you navigate to [localhost:5000/hello/<username>](localhost:5000/hello/<username>).
+
+###Flask Project Directorty Structure
+
+Below is the recommended structure for any Flask project/ application:
+
+~~~{.python}
+
+/your_app
+       hello.py
+       /static
+              /js
+                    hello.js
+             /css
+                    hello.css
+            /images
+                   hello.jpg
+       /templates
+            hello.html
+~~~
+
+Whatever is stored in `templates` can be automatically detected when using `render_template` function, so there isn't anything else we need to do. In order to reference our CSS, Javascript and images from within our HTML, then we need to do something like below:
+
+~~~{.html}
+<!doctype html>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/hello.css') }}">
+<title>Hello from Flask</title>
+{% if name %}
+    <h1>Hello {{ name }}! </h1>
+{% else %}
+    <h1>Hello World! </h1>
+{% endif %}
+~~~            
+                                            
+      
+      
+       
+               
+
+
 
