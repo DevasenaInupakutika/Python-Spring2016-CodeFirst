@@ -202,7 +202,7 @@ In the world of HTTP, there are a number of types of requests; we will be concen
 Everything we have been doing so far has been using a **GET request** - let's see how we can use a simple **POST request**. Let's add a form to [**index.html**](index.html):
 
 ~~~{.html}
-??<div id="contact-form">
+<div id="contact-form">
       <h1>Get In Touch!</h1>
       <form method="post" action="/signup">
               <label for="name">Name: </label>
