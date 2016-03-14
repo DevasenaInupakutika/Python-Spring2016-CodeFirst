@@ -233,7 +233,7 @@ from flask import request
 
 Now if you navigate to [localhost:5000/hello/<username>](localhost:5000/hello/<username>).
 
-###Flask Project Directorty Structure
+###Flask Project Directory Structure
 
 Below is the recommended structure for any Flask project/ application:
 
@@ -263,12 +263,85 @@ Whatever is stored in `templates` can be automatically detected when using `rend
 {% else %}
     <h1>Hello World! </h1>
 {% endif %}
-~~~            
-                                            
-      
-      
-       
-               
+~~~    
 
+###Head to [Mandrill's website](http://mandrill.com) and create an account; we will be using Mandrill to programmatically send emails.
 
+###Head to [twitter.com](https://twitter.com/) and create yourself a **Twitter** account if you don't already have one; we will be using Twitter's API to fetch data - you will need to have an account in order to do that. 
+
+##Using external APIs
+
+###APIs
+
+APIs are of vital importance to developers; they enable you to programmatically access data from various different services such as Twitter, Facebook and Spotify to name a few. APIs enable you to create applications powered by data from any service of your liking. 
+
+###Mandrill
+
+When building a website, for example a landing page for what is to come, one vital thing to do is capture the details of people that might be interested in what you are going to launch. 
+
+Most importantly, you want to capture their email address so you can communicate things to them. 
+In this session, we will learn how to capture a user's email address and any other details for that matter 
+and programmatically send them an email to confirm that they have signed up to your website's newsletter. 
+
+This will be an interactive session based on what we did in **Session 6**. If you look at what we did during that session under the **GET & POST** section, you will see that we already learnt how to capture a user's name and email and print it out on our terminal. Now we are going to use that data to send an email. 
+
+We will be using [Mandrill](http://mandrill.com), an email infrastructure service - or in simpler terms, a service that enables you to programmatically send emails. Madrill has a Python library that makes it easy to send emails, so go ahead and head over to their [Python documentation](https://mandrillapp.com/api/docs/index.python.html) and follow the instructions on how to install the Python client and get started. 
+
+Please create an account on Mandrill now. If you get an error message like `too many people are trying to create an account from the same location`, then wait a little bit. 
+
+This is Mandrill's way to safeguard against spammers creating accounts programmatically to send spam e-mail. 
+
+You can get the Mandrill Python API Client using below command:
+
+~~~{.python}
+sudo pip install mandrill
+~~~
+
+In order to programmatically send emails, we need to get an API key, so go ahead and click on **Get API Keys**. On the next page that you are presented with, click on **+New API Key**. 
+
+On the form that opens up, add a description to make it easier to track your API Keys and leave the rest of boxes unchecked. 
+
+You might wonder, why would you ever want to create multiple API keys. This is especially useful when your website grows and you start sending emails for different functions; registration emails, newsletters etc.  In those cases, you would want to use a different API Key for each function to make life easier when managing what each component does. 
+
+After adding a description, hit **Create API Key** - you should now see a key listed. You will notice that there is a little On/ Off toggle button to the right of the key - ensure that is **On**. 
+
+If we now go back to [Mandrill's Python Documentation](https://mandrillapp.com/api/docs/index.python.html), you can see instructions on how to use the library - to authenticate yourself with Mandrill via Python this is as simple as writing 2 lines of code:
+
+~~~{.python}
+import mandrill
+mandrill_client = mandrill.Mandrill('Your_API_Key')
+~~~
+
+Next up, we want to actually send an email, so we can look at [this](https://mandrillapp.com/api/docs/messages.python.html) part of the documentation which you can access from the left hand side of the Python documentation. The most minimal to send an email would be the following:
+
+~~~{.python}
+import mandrill
+mandrill_client = mandrill.Mandrill('Your_API_Key')
+
+message={
+         'from_email': 'sender email address',
+         'from_name': 'sender name' ,
+         'html': '<p>Thanks for signing up to our awesome newsletter!<p>',
+         'subject': 'Welcome!',
+         'to': [
+             {
+                  'email': 'recipient email address', 
+                  'name': 'Recipient name goes here',
+                  'type': 'to'
+             }
+         ]
+}
+
+mandrill_client.messages.send(
+         message=message,
+         async=False,
+)
+
+~~~{.python}                           
+
+The above example is completely independent from a Flask app, so what you should do now is to figure out how to apply the above code in the context of your Flask app that we created in the last session. 
+
+Ensure that you're sending an email to a valid email address, set your own email address as the **from_email** and use the email and name submitted via the form that we were previously printing.
+
+Read through the documentation and figure out what other things you can do with Mandrill - Can you send an email to multiple recipients? Can you add attachments?
 
